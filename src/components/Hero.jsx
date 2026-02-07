@@ -1,11 +1,14 @@
-import React, { useState } from 'react'; // Added useState
-import { DATA } from '../data';
-import { motion, AnimatePresence } from 'framer-motion'; // Added AnimatePresence for smooth exit
-import { FileText, MapPin, Circle, GraduationCap, Send, Linkedin, Github, X, Instagram } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, MapPin, GraduationCap, FileText, Circle, X, Linkedin, Github, Instagram, Facebook } from 'lucide-react';
 
-export default function Hero() {
-  // 1. Logic for Modal State
+// REMOVED: import { DATA } from '../data';
+// ADDED: { data } to the props
+export default function Hero({ isDark, data }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Guard to prevent white screen
+  if (!data || !data.socials) return null;
 
   const handleDownload = () => {
     window.open('/resume.pdf', '_blank');
@@ -21,61 +24,56 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-6xl md:text-8xl font-extrabold text-white leading-[1.1] tracking-tighter">
-            Hi, I'm <span className="text-blue-500">{DATA.name}</span>.
+          <h1 className={`text-6xl md:text-8xl font-extrabold leading-[1.1] tracking-tighter ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Hi, I'm <span className="text-blue-500">{data.name}</span>.
           </h1>
-          <p className="mt-8 text-xl md:text-2xl text-slate-400 max-w-xl leading-relaxed font-light">
-            I’m a software engineering student dedicated to building <span className="text-white font-medium">clean, functional code</span> and solving real-world problems.
+          <p className={`mt-8 text-xl md:text-2xl max-w-xl leading-relaxed font-light ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            {data.description}
           </p>
           
           <div className="mt-12 flex flex-wrap gap-5">
-            <a 
-              href="#projects" 
-              className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 active:scale-95 text-lg"
-            >
-              View Projects
+            <a href="#projects" className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 active:scale-95 text-lg">
+              {data.projectsTitle || "View Projects"}
             </a>
-            
-            {/* CONTACT BUTTON TRIGGERS MODAL */}
             <button 
               onClick={() => setIsOpen(true)}
-              className="px-10 py-5 bg-slate-800 text-white border border-slate-700 rounded-2xl font-bold hover:bg-slate-700 transition-all flex items-center gap-2 active:scale-95 text-lg cursor-pointer"
+              className={`px-10 py-5 border rounded-2xl font-bold transition-all flex items-center gap-2 active:scale-95 text-lg cursor-pointer ${
+                isDark ? 'bg-slate-800 text-white border-slate-700 hover:bg-slate-700' : 'bg-white text-slate-900 border-slate-200 hover:bg-slate-50'
+              }`}
             >
-              Contact Me <Send size={20} />
+              {data.contactTitle || "Contact Me"} <Send size={20} />
             </button>
           </div>
         </motion.div>
 
-        {/* RIGHT SIDE: THE WIDER PROFILE BOX */}
+        {/* RIGHT SIDE: PROFILE BOX */}
         <motion.div 
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="flex justify-center lg:justify-end"
         >
-          <div className="w-full max-w-md bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 shadow-2xl relative">
+          <div className={`w-full max-w-md backdrop-blur-3xl border rounded-[3rem] p-10 shadow-2xl relative transition-all duration-500 ${
+            isDark ? 'bg-white/5 border-white/10' : 'bg-white/80 border-slate-200 shadow-slate-200'
+          }`}>
             <div className="relative w-full aspect-square mb-10">
               <div className="absolute -inset-6 bg-blue-500/10 rounded-full blur-3xl"></div>
               <img 
                 src="/profile.jpg" 
-                alt={DATA.name} 
+                alt={data.name} 
                 className="relative w-full h-full rounded-[2.5rem] object-cover border border-white/10 grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl"
               />
             </div>
 
             <div className="grid grid-cols-1 gap-4 mb-10 text-slate-300">
-              <div className="flex items-center gap-5 bg-white/5 p-5 rounded-3xl border border-white/5">
-                <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-400">
-                  <MapPin size={22} />
-                </div>
-                <div className="text-base font-medium">Based in <span className="text-white font-bold text-lg">Kosovo</span></div>
+              <div className={`flex items-center gap-5 p-5 rounded-3xl border ${isDark ? 'bg-white/5 border-white/5 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'}`}>
+                <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-400"><MapPin size={22} /></div>
+                <div className="text-base font-medium">Based in <span className={`${isDark ? 'text-white' : 'text-slate-900'} font-bold text-lg`}>Kosovo</span></div>
               </div>
               
-              <div className="flex items-center gap-5 bg-white/5 p-5 rounded-3xl border border-white/5">
-                <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-400">
-                  <GraduationCap size={22} />
-                </div>
-                <div className="text-base font-medium">Final Year <span className="text-white font-bold text-lg">CS Student</span></div>
+              <div className={`flex items-center gap-5 p-5 rounded-3xl border ${isDark ? 'bg-white/5 border-white/5 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'}`}>
+                <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-400"><GraduationCap size={22} /></div>
+                <div className="text-base font-medium">Final Year <span className={`${isDark ? 'text-white' : 'text-slate-900'} font-bold text-lg`}>CS Student</span></div>
               </div>
 
               <div className="flex items-center justify-center pt-2">
@@ -88,98 +86,74 @@ export default function Hero() {
 
             <button 
               onClick={handleDownload}
-              className="w-full py-6 bg-white text-slate-900 rounded-[2rem] font-black text-sm uppercase tracking-[0.25em] hover:bg-blue-50 transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3"
+              className={`w-full py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.25em] transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3 ${
+                isDark ? 'bg-white text-slate-900 hover:bg-blue-50' : 'bg-slate-900 text-white hover:bg-slate-800'
+              }`}
             >
-              <FileText size={20} />
-              Download CV
+              <FileText size={20} /> Download CV
             </button>
           </div>
         </motion.div>
       </div>
 
-      {/* 2. THE CONTACT MODAL */}
+      {/* CONTACT MODAL */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            {/* Backdrop Blur */}
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="absolute inset-0 bg-slate-950/60 backdrop-blur-xl"
+              className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
             />
-            
-            {/* Modal Content */}
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-lg bg-slate-900 border border-white/10 rounded-[3rem] p-10 shadow-2xl overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className={`relative w-full max-w-lg border rounded-[2.5rem] p-10 shadow-2xl ${
+                isDark ? 'bg-slate-900 border-white/10' : 'bg-white border-slate-200'
+              }`}
             >
-              {/* Background Glow inside Modal */}
-              <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-600/20 blur-3xl rounded-full"></div>
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="absolute top-6 right-6 p-2 hover:bg-white/10 rounded-full transition-colors cursor-pointer"
+              >
+                <X size={24} />
+              </button>
               
-              <div className="flex justify-between items-start mb-8">
-                <div>
-                  <h3 className="text-4xl font-bold text-white mb-2">Let's Talk</h3>
-                  <p className="text-slate-400">I'm currently open to new opportunities and collaborations.</p>
-                </div>
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevents the click from bubbling
-                    setIsOpen(false);
-                  }}
-                  className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 border border-white/10 rounded-2xl text-white transition-all cursor-pointer z-[110] active:scale-90 group"
-                  aria-label="Close"
-                >
-                  <X size={20} className="group-hover:rotate-90 transition-transform duration-300" />
-                </button>
-              </div>
-
+              <h3 className="text-3xl font-bold mb-2">{data.contactTitle || "Let's Connect"}</h3>
+              <p className="text-slate-400 mb-8 font-light">Choose your preferred way to reach out.</p>
+              
               <div className="space-y-4">
-                <a 
-                  href="mailto:diellon.haxhaj.com@gmail.com" 
-                  className="flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-3xl hover:bg-blue-600 transition-all group"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-500/20 rounded-2xl text-blue-400 group-hover:bg-white/20 group-hover:text-white">
-                      <Send size={24} />
-                    </div>
-                    <span className="text-xl font-bold text-white tracking-tight">Email Me</span>
-                  </div>
+                <a href={`mailto:${data.socials.email}`} className="flex items-center gap-4 p-5 bg-blue-600 rounded-2xl text-white hover:bg-blue-700 transition-all font-bold group">
+                  <div className="p-2 bg-white/20 rounded-xl group-hover:scale-110 transition-transform"><Send size={20} /></div>
+                  Send an Email
                 </a>
-
-                <a 
-                  href="https://www.linkedin.com/in/diellon-haxhaj-31454a3a3/" 
-                  target="_blank"
-                  className="flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-3xl hover:bg-[#0077b5] transition-all group"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-500/20 rounded-2xl text-blue-400 group-hover:bg-white/20 group-hover:text-white">
-                      <Linkedin size={24} />
-                    </div>
-                    <span className="text-xl font-bold text-white tracking-tight">LinkedIn</span>
-                  </div>
-                </a>
-
-                <a 
-                  href="https://www.instagram.com//haxhajdiellon_" 
-                  target="_blank"
-                  className="flex items-center justify-between p-6 bg-white/5 border border-white/5 rounded-3xl hover:bg-[#0077b5] transition-all group"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-500/20 rounded-2xl text-blue-400 group-hover:bg-white/20 group-hover:text-white">
-                      <Instagram size={24} />
-                    </div>
-                    <span className="text-xl font-bold text-white tracking-tight">Instagram</span>
-                  </div>
-                </a>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <a href={data.socials.linkedin} target="_blank" rel="noreferrer" className={`flex items-center justify-center gap-3 p-5 rounded-2xl border font-bold transition-all ${
+                    isDark ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-slate-100 border-slate-200 hover:bg-slate-200 text-slate-900'
+                  }`}>
+                    <Linkedin size={20} className="text-blue-400" /> LinkedIn
+                  </a>
+                  <a href={data.socials.github} target="_blank" rel="noreferrer" className={`flex items-center justify-center gap-3 p-5 rounded-2xl border font-bold transition-all ${
+                    isDark ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-slate-100 border-slate-200 hover:bg-slate-200 text-slate-900'
+                  }`}>
+                    <Github size={20} /> GitHub
+                  </a>
+                  <a href={data.socials.instagram} target="_blank" rel="noreferrer" className={`flex items-center justify-center gap-3 p-5 rounded-2xl border font-bold transition-all ${
+                    isDark ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-slate-100 border-slate-200 hover:bg-slate-200 text-slate-900'
+                  }`}>
+                    <Instagram size={20} className='text-red-500' /> Instagram
+                  </a>
+                  <a href={data.socials.facebook} target="_blank" rel="noreferrer" className={`flex items-center justify-center gap-3 p-5 rounded-2xl border font-bold transition-all ${
+                    isDark ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-slate-100 border-slate-200 hover:bg-slate-200 text-slate-900'
+                  }`}>
+                    <Facebook size={20} className='text-blue-400' /> Facebook
+                  </a>
+                </div>
               </div>
-
-              <p className="mt-8 text-center text-slate-500 text-sm">
-                Or find me on <a href="#" className="text-white hover:underline">GitHub</a>
-              </p>
             </motion.div>
           </div>
         )}
