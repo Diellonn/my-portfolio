@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction - Diellon Haxhaj</title>
+    <style>
+        :root {
+            --primary: #3b82f6; /* Blue-500 si te React */
+            --bg: #020617; /* Slate-950 */
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Emri lëvizës në sfond */
+        .watermark {
+            position: absolute;
+            font-size: 10vw;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.02);
+            z-index: 0;
+            animation: float 15s ease-in-out infinite;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-5%, -5%) rotate(-5deg); }
+            50% { transform: translate(5%, 5%) rotate(0deg); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3.5rem 2rem;
+            border-radius: 3rem;
+            text-align: center;
+            z-index: 1;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(59, 130, 246, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 0.5rem 0;
+            letter-spacing: -0.02em;
+        }
+
+        .lang-en {
+            color: #94a3b8; /* Slate-400 */
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            color: #64748b; /* Slate-500 */
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-back {
+            background: var(--primary);
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 1.2rem;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-back:hover {
+            background: #2563eb;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4);
+        }
+
+        .timer {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #475569;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark">Diellon Haxhaj</div>
+
+    <div class="glass-card">
+        <div class="loader"></div>
+        
+        <h1>Live Demo në përpunim</h1>
+        <div class="lang-en">Live Demo Under Construction</div>
+        
+        <p>
+            Ky projekt po optimizohet për produksion. Ju lutem provoni përsëri pas pak.<br>
+            <span style="opacity: 0.7;">This project is being optimized for production. Please check back later.</span>
+        </p>
+        
+        <button class="btn-back" onclick="goHome()">Kthehu Mbrapa / Go Back</button>
+        
+        <div class="timer">Redirecting in <span id="seconds">15</span>s...</div>
+    </div>
+
+    <script>
+        function goHome() {
+            // Te dërgon te faqja kryesore (Home)
+            window.location.href = window.location.origin;
+        }
+
+        let timeLeft = 15;
+        const timerElement = document.getElementById('seconds');
+        
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                goHome();
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
