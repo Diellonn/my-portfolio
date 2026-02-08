@@ -1,7 +1,12 @@
 import React from 'react';
-import { DATA } from '../data';
 
-export default function About({ isDark }) {
+// 1. Heqim import { DATA }...
+// 2. Shtojmë 'data' te props
+export default function About({ isDark, data }) {
+  
+  // Guard clause që të mos crasht-ojë nëse data nuk është gati
+  if (!data) return null;
+
   return (
     <section id="about" className={`py-24 px-6 transition-colors duration-500 ${
       isDark ? 'bg-slate-950' : 'bg-slate-50'
@@ -18,10 +23,9 @@ export default function About({ isDark }) {
             <div className={`relative aspect-square rounded-[2.5rem] overflow-hidden border-2 transition-colors ${
               isDark ? 'border-white/10 bg-slate-900' : 'border-slate-200 bg-white'
             }`}>
-              {/* Replace with your actual photo or an avatar */}
               <img 
                 src="/profile.jpg" 
-                alt="Dielli" 
+                alt={data.name} 
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
               />
             </div>
@@ -29,34 +33,35 @@ export default function About({ isDark }) {
 
           {/* TEXT SIDE */}
           <div className="w-full md:w-1/2">
+            {/* 3. Përdorim data.aboutTitle nga data.js */}
             <h2 className={`text-4xl md:text-5xl font-bold mb-8 ${
               isDark ? 'text-white' : 'text-slate-900'
             }`}>
-              A bit <span className="text-blue-500">about me</span>
+              {data.aboutTitle || "A bit about me"}
             </h2>
             
             <div className={`space-y-6 text-lg leading-relaxed ${
               isDark ? 'text-slate-400' : 'text-slate-600'
             }`}>
+              {/* 4. Përdorim përshkrimin dinamik */}
               <p>
-                Hello! I'm <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Dielli</span>, 
-                a developer who loves building digital products that are as functional as they are beautiful. 
-                My journey into tech started with a curiosity for how things work on the internet.
+                {data.longDescription}
               </p>
               
-              <p>
-                Today, I focus on creating fast, responsive, and user-centric web applications. 
-                I enjoy the challenge of turning complex problems into simple, intuitive designs.
-              </p>
-
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div>
-                  <h4 className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>Location</h4>
+                  <h4 className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    {data.projectsTitle === "Punët e Fundit" ? "Vendndodhja" : "Location"}
+                  </h4>
                   <p className="text-sm">Kosovo, EU</p>
                 </div>
                 <div>
-                  <h4 className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>Experience</h4>
-                  <p className="text-sm">Building since 2023</p>
+                  <h4 className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    {data.projectsTitle === "Punët e Fundit" ? "Përvoja" : "Experience"}
+                  </h4>
+                  <p className="text-sm">
+                    {data.projectsTitle === "Punët e Fundit" ? "Duke ndërtuar që nga 2023" : "Building since 2023"}
+                  </p>
                 </div>
               </div>
             </div>

@@ -42,7 +42,7 @@ export default function App() {
         <p className="font-medium tracking-wide">
           © {new Date().getFullYear()} — Built with passion by 
           <span className={`ml-1 font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            {DATA.name}
+            {DATA.common.name}
           </span>
         </p>
       </footer>
