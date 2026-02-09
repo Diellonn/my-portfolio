@@ -2,3 +2,15 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Scrollbar i personalizuar për Dark Mode */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 10px;
+}
