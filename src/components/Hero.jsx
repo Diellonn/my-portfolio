@@ -59,7 +59,7 @@ export default function Hero({ isDark, data }) {
             <div className="relative w-full aspect-square mb-10">
               <div className="absolute -inset-6 bg-blue-500/10 rounded-full blur-3xl"></div>
               <img 
-                src="/profile.jpg" 
+                src="/diellonphoto.jpg" 
                 alt={data.name} 
                 className="relative w-full h-full rounded-[2.5rem] object-cover border border-white/10 grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl"
               />
