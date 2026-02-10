@@ -1,136 +1,148 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Github, X, ChevronLeft, ChevronRight, PlayCircle } from 'lucide-react';
 
 export default function Projects({ isDark, data }) {
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentImg, setCurrentImg] = useState(0);
 
+  const isAlbanian = data?.projectsTitle?.includes("Punët") || data?.projectsTitle?.includes("Projektet");
+
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [selectedProject]);
+
   if (!data) return null;
-
-  // Slideshow Logic
-  const nextImg = (e) => {
-    e.stopPropagation();
-    setCurrentImg((prev) => (prev + 1) % selectedProject.images.length);
-  };
-
-  const prevImg = (e) => {
-    e.stopPropagation();
-    setCurrentImg((prev) => (prev - 1 + selectedProject.images.length) % selectedProject.images.length);
-  };
 
   return (
     <section id="projects" className={`py-24 px-6 transition-colors duration-500 ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}>
       <div className="max-w-5xl mx-auto">
         <h2 className={`text-4xl font-bold mb-16 flex items-center gap-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
           <span className="text-blue-500 text-xl font-mono">01.</span> 
-          {data.projectsTitle || "Featured Work"}
+          {data.projectsTitle}
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {data.projects?.map((project, index) => (
-            <motion.div 
-              key={index} 
-              layoutId={`card-${index}`}
+            <div 
+              key={index}
               onClick={() => { setSelectedProject(project); setCurrentImg(0); }}
-              className={`group cursor-pointer p-8 border rounded-3xl transition-all duration-500 shadow-2xl ${
-                isDark ? 'bg-white/5 border-white/10 shadow-black/40' : 'bg-white border-slate-200 shadow-slate-200'
-              }`}
+              className={`group cursor-pointer p-8 border rounded-[2rem] transition-all duration-500 shadow-xl relative ${
+                isDark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200'
+              } hover:-translate-y-2`}
             >
-              {/* Thumbnail / First Image Preview */}
-              {project.images && (
-                <div className="mb-6 overflow-hidden rounded-2xl aspect-video">
-                  <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              {project.video && (
+                <div className="absolute top-4 right-4 z-10 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                  <PlayCircle size={12} /> VIDEO
                 </div>
               )}
-
-              <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>{project.title}</h3>
-              <p className={`mb-6 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{project.desc}</p>
+              <div className="mb-6 overflow-hidden rounded-2xl aspect-video">
+                <img src={project.images?.[0]} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+              </div>
+              <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>{project.title}</h3>
+              <p className={`text-sm mb-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{project.desc}</p>
               
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tech.map((t, i) => (
-                  <span key={i} className="text-[10px] uppercase tracking-wider font-bold px-3 py-1 bg-blue-500/10 text-blue-400 rounded-lg">{t}</span>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tech.slice(0, 3).map((t, i) => (
+                  <span key={i} className="text-[10px] font-bold px-2 py-1 bg-blue-500/10 text-blue-400 rounded">{t}</span>
                 ))}
               </div>
-              <span className="text-blue-500 font-bold text-sm">View Details →</span>
-            </motion.div>
+              <span className="text-blue-500 font-bold text-sm">
+                {isAlbanian ? "Shiko Detajet →" : "View Details →"}
+              </span>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* PROJECT DETAILS MODAL */}
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 md:p-10">
-            {/* Backdrop */}
+          <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-10">
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setSelectedProject(null)}
-              className="absolute inset-0 bg-slate-950/90 backdrop-blur-md"
+              className="absolute inset-0 bg-slate-950/95 backdrop-blur-md"
             />
 
-            {/* Modal Content */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className={`relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] shadow-2xl border ${
+              className={`relative z-10 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] shadow-2xl border flex flex-col lg:flex-row ${
                 isDark ? 'bg-slate-900 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'
               }`}
+              onClick={(e) => e.stopPropagation()} 
             >
-              <button onClick={() => setSelectedProject(null)} className="absolute top-6 right-6 z-10 p-3 bg-black/20 hover:bg-black/40 rounded-full text-white transition-colors">
+              <button 
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-4 right-4 z-50 p-3 bg-black/50 hover:bg-red-500 rounded-full text-white transition-all"
+              >
                 <X size={24} />
               </button>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2">
-                {/* LEFT SIDE: SLIDESHOW */}
-                <div className="relative aspect-video lg:aspect-square bg-black flex items-center justify-center">
-                  <AnimatePresence mode="wait">
-                    <motion.img 
-                      key={currentImg}
-                      src={selectedProject.images[currentImg]}
-                      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                      className="w-full h-full object-contain"
-                    />
-                  </AnimatePresence>
-                  
-                  {selectedProject.images.length > 1 && (
-                    <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex justify-between">
-                      <button onClick={prevImg} className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white"><ChevronLeft size={24} /></button>
-                      <button onClick={nextImg} className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white"><ChevronRight size={24} /></button>
-                    </div>
-                  )}
-                  
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                    {selectedProject.images.map((_, i) => (
-                      <div key={i} className={`h-1.5 rounded-full transition-all ${currentImg === i ? 'w-6 bg-blue-500' : 'w-1.5 bg-white/30'}`} />
-                    ))}
+              <div className="w-full lg:w-1/2 bg-black aspect-video lg:aspect-auto flex items-center justify-center relative min-h-[300px]">
+                <img 
+                  src={selectedProject.images[currentImg]} 
+                  className="w-full h-full object-contain p-4" 
+                  alt="Project"
+                />
+                {selectedProject.images?.length > 1 && (
+                  <div className="absolute inset-x-4 flex justify-between pointer-events-none">
+                    <button 
+                       onClick={(e) => { e.stopPropagation(); setCurrentImg((currentImg - 1 + selectedProject.images.length) % selectedProject.images.length); }} 
+                       className="p-2 bg-black/50 rounded-full text-white pointer-events-auto hover:bg-blue-600 transition-colors"
+                    >
+                      <ChevronLeft />
+                    </button>
+                    <button 
+                       onClick={(e) => { e.stopPropagation(); setCurrentImg((currentImg + 1) % selectedProject.images.length); }} 
+                       className="p-2 bg-black/50 rounded-full text-white pointer-events-auto hover:bg-blue-600 transition-colors"
+                    >
+                      <ChevronRight />
+                    </button>
                   </div>
+                )}
+              </div>
+
+              <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col">
+                <h2 className="text-3xl md:text-4xl font-black mb-6">{selectedProject.title}</h2>
+                
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {selectedProject.tech.map((t, i) => (
+                    <span key={i} className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full text-[10px] font-bold">{t}</span>
+                  ))}
                 </div>
 
-                {/* RIGHT SIDE: INFO */}
-                <div className="p-8 md:p-12">
-                  <h2 className="text-4xl font-black mb-6">{selectedProject.title}</h2>
-                  <p className={`text-lg leading-relaxed mb-8 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                    {selectedProject.longDesc || selectedProject.desc}
-                  </p>
+                <p className={`text-base leading-relaxed mb-10 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  {selectedProject.longDesc || selectedProject.desc}
+                </p>
 
-                  <div className="flex flex-wrap gap-3 mb-10">
-                    {selectedProject.tech.map((t, i) => (
-                      <span key={i} className="px-4 py-2 bg-blue-500/10 text-blue-400 rounded-xl text-sm font-bold border border-blue-500/20">{t}</span>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <a href={selectedProject.github} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20">
-                      <Github size={20} /> View Source
-                    </a>
-                    {selectedProject.link && (
-                      <a href={selectedProject.link} target="_blank" rel="noreferrer" className={`flex items-center justify-center gap-3 px-8 py-4 border rounded-2xl font-bold transition-all ${isDark ? 'border-white/10 hover:bg-white/5' : 'border-slate-200 hover:bg-slate-50'}`}>
-                        <ExternalLink size={20} /> Live Demo
-                      </a>
-                    )}
-                  </div>
+                <div className="mt-auto flex flex-col sm:flex-row gap-4">
+                  <a 
+                    href={selectedProject.github || "#"} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-slate-800 text-white rounded-xl font-bold hover:bg-slate-700 transition-all"
+                  >
+                    <Github size={20} /> {isAlbanian ? "Kodi" : "Source Code"}
+                  </a>
+                  
+                  <a 
+                    href={selectedProject.video 
+                      ? `/video-demo.html?v=${selectedProject.video.split('/').pop()}&lang=${isAlbanian ? 'sq' : 'en'}` 
+                      : (selectedProject.link || "/perpunim.html")} 
+                    className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg"
+                  >
+                    <ExternalLink size={20} /> 
+                    {isAlbanian 
+                      ? (selectedProject.video ? "Shiko Videon" : "Demo Live") 
+                      : (selectedProject.video ? "Watch Video" : "Live Demo")
+                    }
+                  </a>
                 </div>
               </div>
             </motion.div>

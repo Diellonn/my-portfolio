@@ -9,27 +9,33 @@ import About from './components/About';
 
 export default function App() {
   const [isDark, setIsDark] = useState(true);
-  const [lang, setLang] = useState('en');
+  
+  // Lexon gjuhën e ruajtur ose vendos 'en' si default
+  const [lang, setLang] = useState(() => {
+    return localStorage.getItem('preferredLang') || 'en';
+  });
 
   const currentData = { ...DATA.common, ...DATA[lang] };
 
-  // Sync the body background so there is no white/dark "gap" when scrolling
+  // Sinkronizimi i background-it dhe ruajtja e gjuhës
   useEffect(() => {
     document.body.style.backgroundColor = isDark ? '#020617' : '#f8fafc';
   }, [isDark]);
 
   return (
-    // Only one wrapper needed here
     <div className={`${isDark ? 'dark bg-slate-950 text-white' : 'bg-slate-50 text-slate-900'} min-h-screen transition-colors duration-500 selection:bg-blue-500/30`}>
       
-      <Navbar isDark={isDark} setIsDark={setIsDark}
-      lang={lang} 
-        setLang={setLang} />
+      <Navbar 
+        isDark={isDark} 
+        setIsDark={setIsDark}
+        lang={lang} 
+        setLang={setLang} 
+      />
       
       <main>
         <Hero isDark={isDark} data={currentData}/>
         <About isDark={isDark} data={currentData}/>
-        <Projects isDark={isDark} data={currentData}/>
+        <Projects isDark={isDark} data={currentData} />
         <Skills isDark={isDark} data={currentData}/>
         <Contact isDark={isDark} data={currentData}/>
       </main>

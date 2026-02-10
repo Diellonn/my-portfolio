@@ -1,3 +1,5 @@
+import { video } from "framer-motion/client";
+
 export const DATA = {
   en: {
     role: "Software Engineering Student",
@@ -16,6 +18,7 @@ export const DATA = {
         tech: ["React", "MySQL", "Tailwind CSS", ".NET Core"],
         github: "",
         link: "perpunim.html",
+        video: "/videos/hmslivedemo.mp4",
         images: [
           "/projects/login.png", 
           "/projects/signup.png", 
@@ -67,6 +70,7 @@ export const DATA = {
         tech: ["React", "MySQL", "Tailwind CSS", ".NET Core"],
         github: "#",
         link: "perpunim.html",
+        video: "/videos/hmslivedemo.mp4",
         images: [
           "/projects/login.png", 
           "/projects/signup.png", 

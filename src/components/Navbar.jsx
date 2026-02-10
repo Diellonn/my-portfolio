@@ -2,14 +2,21 @@ import React, { useState } from 'react';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Navbar({ isDark, setIsDark,lang, setLang }) {
+export default function Navbar({ isDark, setIsDark, lang, setLang }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Projects', href: '#projects' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'About', href: '#about' },
+    { name: lang === 'en' ? 'Projects' : 'Projektet', href: '#projects' },
+    { name: lang === 'en' ? 'Skills' : 'Aftësitë', href: '#skills' },
+    { name: lang === 'en' ? 'About' : 'Rreth meje', href: '#about' },
   ];
+
+  // Funksioni për ndërrimin e gjuhës dhe ruajtjen në memorje
+  const toggleLanguage = () => {
+    const nextLang = lang === 'en' ? 'sq' : 'en';
+    setLang(nextLang);
+    localStorage.setItem('preferredLang', nextLang); // KJO ËSHTË E RËNDËSISHME
+  };
 
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[200]">
@@ -36,7 +43,7 @@ export default function Navbar({ isDark, setIsDark,lang, setLang }) {
           </span>
         </div>
 
-        {/* DESKTOP NAVIGATION (Hidden on mobile) */}
+        {/* DESKTOP NAVIGATION */}
         <div className={`hidden md:flex items-center gap-8 font-medium text-sm tracking-widest uppercase transition-colors ${
           isDark ? 'text-slate-400' : 'text-slate-600'
         }`}>
@@ -50,15 +57,17 @@ export default function Navbar({ isDark, setIsDark,lang, setLang }) {
 
         {/* ACTION BUTTONS */}
         <div className="flex items-center gap-2">
-          {/* DARK MODE TOGGLE */}
+          {/* LANGUAGE TOGGLE */}
           <button 
-      onClick={() => setLang(lang === 'en' ? 'sq' : 'en')}
+            onClick={toggleLanguage}
             className={`px-3 py-1.5 rounded-xl border font-black text-[10px] tracking-tighter transition-all ${
               isDark ? 'bg-white/5 border-white/10 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
             }`}
           >
             {lang === 'en' ? 'SQ' : 'EN'}
           </button>
+
+          {/* DARK MODE TOGGLE */}
           <button 
             onClick={() => setIsDark(!isDark)}
             className={`p-3 border rounded-full transition-all cursor-pointer group ${
@@ -70,7 +79,7 @@ export default function Navbar({ isDark, setIsDark,lang, setLang }) {
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          {/* MOBILE MENU BUTTON (Hidden on desktop) */}
+          {/* MOBILE MENU BUTTON */}
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
             className={`md:hidden p-3 border rounded-full transition-all ${
