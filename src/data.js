@@ -27,30 +27,15 @@ export const DATA = {
       },
       { 
         id: 2,
-        title: "E-Commerce Ecosystem", 
-        desc: "A full-stack online shopping platform with secure checkout.", 
-        longDesc: "Developed a robust e-commerce solution including a custom-built API. Features include product filtering, a persistent shopping cart, user profile management, and integration with Stripe for secure payment processing.",
-        tech: ["Node.js", "Express", "MongoDB", "Redux"],
+        title: "Internship Operating Simulator", 
+        desc: "Admin: admin@gmail.com Password: admin, Intern: intern@gmail.com Password: intern, Mentor: mentor@gmail.com Password: mentor", 
+        longDesc: "This project is an internship operating simulator designed to provide a realistic experience for interns, mentors, and administrators. The platform allows users to log in with different roles (Admin, Intern, Mentor) and access tailored features based on their role. Admins can manage user accounts and oversee the internship process, while interns can track their progress and receive feedback from mentors. The system is built with a focus on user experience and efficient data management.",
+        tech: [".NET Core", "React", "MySql", "Tailwind CSS"],
         github: "",
-        link: "perpunim.html",
-        images: [
-          "/projects/ecomerce.png",
-          "/projects/shop-admin.jpg"
+        link: "https://intern-operating-simulator.vercel.app/login",
+        images: ["/projects/login-intern.png", "/projects/dashboard-intern.png","/projects/task-console.png"
         ]
-      },
-      { 
-        id: 3,
-        title: "AI Algorithm Visualizer", 
-        desc: "Interactive tool to visualize complex pathfinding algorithms.", 
-        longDesc: "This tool helps students understand how algorithms like A* and Dijkstra work. Users can draw walls, move start/end nodes, and watch the algorithm 'think' and find the shortest path in real-time.",
-        tech: ["React", "Algorithms", "CSS Grid", "Vite"],
-        github: "",
-        link: "",
-        images: [
-          "/projects/ai.png",
-          "/projects/ai-viz-2.jpg"
-        ]
-      },
+      }
     ]
   },
   sq: {
@@ -79,22 +64,14 @@ export const DATA = {
       },
       { 
         id: 2,
-        title: "Ekosistemi E-Commerce", 
-        desc: "Një platformë blerjeje online me pagesa të sigurta.", 
-        longDesc: "Zhvillova një zgjidhje të fuqishme e-commerce duke përfshirë një API të personalizuar. Karakteristikat përfshijnë filtrat e produkteve, karrocën e blerjeve dhe integrimin me Stripe.",
-        tech: ["Node.js", "Express", "MongoDB"],
+        title: "Simulatori i Operimit të Praktikës", 
+        desc: "Admin: admin@gmail.com Password: admin, Intern: intern@gmail.com Password: intern, Mentor: mentor@gmail.com Password: mentor", 
+        longDesc: "Ky projekt është një simulator i operimit të praktikës i dizajnuar për të ofruar një përvojë realiste për praktikantët, mentorët dhe administratorët. Platforma lejon përdoruesit të hyjnë me role të ndryshme (Admin, Praktikant, Mentor) dhe të aksesojnë veçori të përshtatura bazuar në rolin e tyre. Administratorët mund të menaxhojnë llogaritë e përdoruesve dhe të mbikëqyrin procesin e praktikës, ndërsa praktikantët mund të ndjekin progresin e tyre dhe të marrin feedback nga mentorët. Sistemi është ndërtuar me fokus në përvojën e përdoruesit dhe menaxhimin efikas të të dhënave.",
+        tech: [".NET Core", "React", "MySql", "Tailwind CSS"],
         github: "#",
-        images: ["/projects/ecomerce.png", "/projects/shop-cart.jpg"]
-      },
-      { 
-        id: 3,
-        title: "Vizualizuesi i Algoritmeve AI", 
-        desc: "Mjet interaktiv për të vizualizuar algoritmet komplekse të kërkimit të rrugës.", 
-        longDesc: "Ky mjet ndihmon studentët të kuptojnë se si funksionojnë algoritmet si A* dhe Dijkstra në kohë reale.",
-        tech: ["React", "Algoritme", "Vite"],
-        github: "#",
-        images: ["/projects/ai.png", "/projects/ai-viz-2.jpg"]
-      },
+        link: "https://intern-operating-simulator.vercel.app/login",
+        images: ["/projects/login-intern.png", "/projects/dashboard-intern.png","/projects/task-console.png"]
+      }
     ]
   },
   common: {
