@@ -29,7 +29,7 @@ export const DATA = {
         id: 1,
         title: "Internship Operating Simulator", 
         desc: "Admin: admin@gmail.com Password: admin, Intern: intern@gmail.com Password: intern, Mentor: mentor@gmail.com Password: mentor", 
-        longDesc: "Admin: admin@gmail.com Password: admin, Intern: intern@gmail.com Password: intern, Mentor: mentor@gmail.com Password: mentor                This project is an internship operating simulator designed to provide a realistic experience for interns, mentors, and administrators. The platform allows users to log in with different roles (Admin, Intern, Mentor) and access tailored features based on their role. Admins can manage user accounts and oversee the internship process, while interns can track their progress and receive feedback from mentors. The system is built with a focus on user experience and efficient data management.",
+        longDesc: "Admin: admin@gmail.com Password: admin; Intern: intern@gmail.com Password: inter;, Mentor: mentor@gmail.com Password: mentor--------------This project is an internship operating simulator designed to provide a realistic experience for interns, mentors, and administrators. The platform allows users to log in with different roles (Admin, Intern, Mentor) and access tailored features based on their role. Admins can manage user accounts and oversee the internship process, while interns can track their progress and receive feedback from mentors. The system is built with a focus on user experience and efficient data management.",
         tech: [".NET Core", "React", "MySql", "Tailwind CSS"],
         github: "",
         link: "https://intern-operating-simulator.vercel.app/login",
