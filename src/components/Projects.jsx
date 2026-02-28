@@ -139,8 +139,8 @@ export default function Projects({ isDark, data }) {
                   >
                     <ExternalLink size={20} /> 
                     {isAlbanian 
-                      ? (selectedProject.video ? "Testo" : "Demo Live") 
-                      : (selectedProject.video ? "Live Demo" : "Live Demo")
+                      ? (selectedProject.video ? "Shiko Videon" : "Demo Live") 
+                      : (selectedProject.video ? "Testo" : "Live Demo")
                     }
                   </a>
                 </div>

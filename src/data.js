@@ -11,7 +11,7 @@ export const DATA = {
     contactTitle: "Let's Work Together",
     projects: [
       { 
-        id: 1,
+        id: 2,
         title: "Hospital Management System", 
         desc: "A hospital management system that i made for my final year.", 
         longDesc: "A full-stack healthcare ERP engineered to modernize hospital workflows. I architected the backend using .NET Core, implementing a repository pattern to manage complex interactions with a MySQL database. The system features a real-time administrative dashboard and granular Role-Based Access Control (RBAC) to ensure HIPAA-compliant data handling. By optimizing SQL indexing and API response times, I ensured the platform remains performant under heavy data loads, all while delivering a fluid UI via React and Framer Motion.",
@@ -26,10 +26,10 @@ export const DATA = {
         ]
       },
       { 
-        id: 2,
+        id: 1,
         title: "Internship Operating Simulator", 
         desc: "Admin: admin@gmail.com Password: admin, Intern: intern@gmail.com Password: intern, Mentor: mentor@gmail.com Password: mentor", 
-        longDesc: "This project is an internship operating simulator designed to provide a realistic experience for interns, mentors, and administrators. The platform allows users to log in with different roles (Admin, Intern, Mentor) and access tailored features based on their role. Admins can manage user accounts and oversee the internship process, while interns can track their progress and receive feedback from mentors. The system is built with a focus on user experience and efficient data management.",
+        longDesc: "Admin: admin@gmail.com Password: admin, Intern: intern@gmail.com Password: intern, Mentor: mentor@gmail.com Password: mentor                This project is an internship operating simulator designed to provide a realistic experience for interns, mentors, and administrators. The platform allows users to log in with different roles (Admin, Intern, Mentor) and access tailored features based on their role. Admins can manage user accounts and oversee the internship process, while interns can track their progress and receive feedback from mentors. The system is built with a focus on user experience and efficient data management.",
         tech: [".NET Core", "React", "MySql", "Tailwind CSS"],
         github: "",
         link: "https://intern-operating-simulator.vercel.app/login",
